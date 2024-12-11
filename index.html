@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Follow-Up App</title>
+</head>
+<body>
+    <h1>Email Follow-Up App</h1>
+    <button id="authButton">Authenticate with Google</button>
+
+    <script>
+        document.getElementById("authButton").addEventListener("click", function () {
+            window.location.href = "/auth/google";
+        });
+    </script>
+</body>
+</html>

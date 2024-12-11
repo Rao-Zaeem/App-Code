@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail Follow-Up App</title>
+    <!-- <link rel="stylesheet" href="successstyle.css"> -->
+</head>
+<body>
+    <div class="container">
+        <h1>Gmail Follow-Up App</h1>
+
+        <div id="threadsContainer">
+            <h3>Your Threads</h3>
+            <ul id="threadsList">
+                <!-- Threads will be dynamically added here -->
+            </ul>
+        </div>
+
+        <h2>Schedule Follow-Up Emails</h2>
+        <form id="followUpForm">
+            
+            <div class="form-group">
+                <label for="emailBody">Email Body:</label>
+                <textarea id="emailBody" name="emailBody" rows="5" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="waitPeriod">Wait Period (hours):</label>
+                <input type="number" id="waitPeriod" name="waitPeriod" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="followUpTime">Follow-Up Time (hours):</label>
+                <input type="number" id="followUpTime" name="followUpTime" min="0" required>
+            </div>
+
+            <button type="submit">Schedule Email</button>
+        </form>
+    </div>
+
+    <script>
+        // Fetch and display threads
+        async function fetchThreads() {
+            try {
+                const response = await fetch('/threads');
+                const threads = await response.json();
+
+                const threadsList = document.getElementById('threadsList');
+                threads.forEach(thread => {
+                    const threadItem = document.createElement('li');
+                    const date = new Date(thread.date).toLocaleString(); // Format date as a readable string
+                    threadItem.innerHTML = `<strong>Subject:</strong> ${thread.subject}<br>
+                                            <strong>Last Message:</strong> ${thread.snippet}<br>
+                                            <strong>Date:</strong> ${date}`;
+                    threadsList.appendChild(threadItem);
+                });
+            } catch (err) {
+                console.error('Error fetching threads:', err);
+            }
+        }
+
+        // Call the fetchThreads function when the page loads
+        document.addEventListener('DOMContentLoaded', fetchThreads);
+    </script>
+</body>
+</html>
